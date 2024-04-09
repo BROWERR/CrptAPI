@@ -1,4 +1,7 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -58,7 +61,7 @@ public class CrptApi {
      * @throws InterruptedException
      * @throws IOException
      */
-    public void createDocument(Object document, String signature) throws InterruptedException, IOException {
+    public void createDocument(Document document, String signature) throws InterruptedException, IOException {
         semaphore.acquire();
         try {
             String jsonDocument = objectMapper.writeValueAsString(document);
@@ -78,7 +81,51 @@ public class CrptApi {
         }
     }
 
+    @RequiredArgsConstructor
+    @Getter
+    @Setter
+    private static class Document {
+        private Description description;
+        private String doc_id;
+        private String doc_status;
+        private String doc_type;
+        private boolean importRequest;
+        private String owner_inn;
+        private String participant_inn;
+        private String producer_inn;
+        private String production_date;
+        private String production_type;
+        private Product[] products;
+        private String reg_date;
+        private String reg_number;
+    }
+
+
+    @RequiredArgsConstructor
+    @Getter
+    @Setter
+    private static class Description {
+        private String participantInn;
+    }
+
+
+    @RequiredArgsConstructor
+    @Getter
+    @Setter
+    private static class Product {
+        private String certificate_document;
+        private String certificate_document_date;
+        private String certificate_document_number;
+        private String owner_inn;
+        private String producer_inn;
+        private String production_date;
+        private String tnved_code;
+        private String uit_code;
+        private String uitu_code;
+    }
+
 }
+
 
 class StatusResponseException extends RuntimeException {
     public StatusResponseException(String messsage) {
