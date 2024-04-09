@@ -22,7 +22,7 @@ public class CrptApi {
     private final Semaphore semaphore;
 
     private static final String URL = "https://ismp.crpt.ru/api/v3/lk/documents/create";
-    private final Logger log = Logger.getLogger(CrptApi.class.getName());
+    private static final Logger log = Logger.getLogger(CrptApi.class.getName());
 
     public CrptApi(TimeUnit timeUnit, int requestLimit) {
         this.httpClient = HttpClients.createDefault();
